@@ -1,0 +1,23 @@
+class Solution:
+    # Function to check whether a Binary Tree is BST or not.
+    def isBST(self, root):
+        # We define a helper function that carries the valid range
+        # float('-inf') and float('inf') represent negative and positive infinity
+        return self.validate(root, float('-inf'), float('inf'))
+
+    def validate(self, node, min_val, max_val):
+        # An empty tree/leaf reach is technically a BST
+        if not node:
+            return True
+
+        # Check if current node violates the BST property
+        # Constraints: data must be strictly between min_val and max_val
+        if not (min_val < node.data < max_val):
+            return False
+
+        # Recursively check subtrees with updated ranges
+        # Left child: must be < current node data
+        # Right child: must be > current node data
+        return (self.validate(node.left, min_val, node.data) and 
+                self.validate(node.right, node.data, max_val))
+                
